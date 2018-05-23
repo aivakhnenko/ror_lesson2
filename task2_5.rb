@@ -1,25 +1,13 @@
-puts "Enter date (dd.mm.yyyy):"
-date = gets.chomp
+print "Enter day:   "
+day = gets.to_i
 
-date_split = date.split(".").map { |s| s.to_i }
+print "Enter month: "
+month = gets.to_i
 
-day   = date_split[0]
-month = date_split[1]
-year  = date_split[2]
+print "Enter year:  "
+year = gets.to_i
 
-result = day +
-  (month >  1 ? 1 : 0) * 31 + 
-  (month >  2 ? 1 : 0) * (
-                          year %   4 != 0 ? 28 : 
-                          year % 100 != 0 ? 29 : 
-                          year % 400 != 0 ? 28 : 29
-                         )  + 
-  (month >  3 ? 1 : 0) * 31 + 
-  (month >  4 ? 1 : 0) * 30 + 
-  (month >  5 ? 1 : 0) * 31 + 
-  (month >  6 ? 1 : 0) * 30 + 
-  (month >  7 ? 1 : 0) * 31 + 
-  (month >  8 ? 1 : 0) * 31 + 
-  (month >  9 ? 1 : 0) * 30 + 
-  (month > 10 ? 1 : 0) * 31 + 
-  (month > 11 ? 1 : 0) * 30
+months = [0, 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
+months[2] = 29 if (year % 4 == 0) && ((year % 100 != 0) || (year % 400 == 0))
+
+result = day + months[0..(month - 1)].inject(:+)
